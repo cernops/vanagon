@@ -8,7 +8,7 @@ class Vanagon
       def generate_package(project) # rubocop:disable Metrics/AbcSize
         target_dir = project.repo ? output_dir(project.repo) : output_dir
         target_source_output_dir = project.repo ? source_output_dir(project.repo) : source_output_dir
-        if project.source_artifacts
+        unless  project.source_artifacts
           rpmbuild = "#{@rpmbuild} -ba"
           artifact_copy = "mkdir -p output/#{target_source_output_dir}; cp $(tempdir)/rpmbuild/RPMS/**/*.rpm ./output/#{target_dir}; cp $(tempdir)/rpmbuild/SRPMS/*.rpm ./output/#{target_source_output_dir}"
         else
