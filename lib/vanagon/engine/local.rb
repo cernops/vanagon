@@ -37,7 +37,17 @@ class Vanagon
       end
 
       def ship_workdir(workdir)
+        warn "Shipping #{workdir}/* to #{remote_workdir} "
+
         FileUtils.cp_r(Dir.glob("#{workdir}/*"), @remote_workdir)
+        if !Dir.glob("#{workdir}/agent-runtime-6.x*.tar.gz").empty?
+          warn "Original tar size #{File.size(Dir.glob("#{remote_workdir}/agent-runtime*tar.gz").first)}"
+          if File.size(Dir.glob("#{remote_workdir}/agent-runtime-6.x*tar.gz").first) == 0
+             warn "Destination agent-runtime was created with 0 size, copying with cp"
+             system("cp #{workdir}/agent-runtime-6.x*tar.gz #{remote_workdir}/.")
+          end
+          warn "Final tar size #{File.size(Dir.glob("#{remote_workdir}/agent-runtime*tar.gz").first)}"
+        end
       end
 
       def retrieve_built_artifact(artifacts_to_fetch, no_packaging)
