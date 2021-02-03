@@ -44,7 +44,7 @@ class Vanagon
           warn "Original tar size #{File.size(Dir.glob("#{remote_workdir}/agent-runtime*tar.gz").first)}"
           if File.size(Dir.glob("#{remote_workdir}/agent-runtime-6.x*tar.gz").first) == 0
              warn "Destination agent-runtime was created with 0 size, copying with cp"
-             system("cp #{workdir}/agent-runtime-6.x*tar.gz #{remote_workdir}/.")
+             system("cp -arv #{workdir}/* #{remote_workdir}/.")
           end
           warn "Final tar size #{File.size(Dir.glob("#{remote_workdir}/agent-runtime*tar.gz").first)}"
         end
